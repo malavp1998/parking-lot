@@ -1,5 +1,5 @@
 package model;
 
 public enum VehicleSize {
-    SMALL ,MEDIUM, LARGE 
+    SMALL ,MEDIUM, LARGE ;
 }
