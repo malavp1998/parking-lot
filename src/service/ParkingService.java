@@ -52,15 +52,14 @@ public class ParkingService {
                 return slots[i].getSlotNumber();
             }
         }
-
         return -1;
     }
 
     public void printSpots() {
         for (int i = 0; i < totalSlot; i++) {
-            System.out.print(slots[i].getSlotNumber() + " " + slots[i].isEmpty() + " ");
+            System.out.print("Slot Number :" + slots[i].getSlotNumber() + " isEmpty :" + slots[i].isEmpty() + " ");
             if (!slots[i].isEmpty())
-                System.out.println(slots[i].getParkVehicle().getVehicleNumber());
+                System.out.println("Size :" + slots[i].getParkVehicle().getVehicleType() + " Type :" + slots[i].getParkVehicle().getVehicleSize() + " Vehicle Number :" + slots[i].getParkVehicle().getVehicleNumber());
             else
                 System.out.println(" empty");
         }

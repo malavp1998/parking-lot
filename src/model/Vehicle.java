@@ -1,9 +1,10 @@
 package model;
 
-public class Vehicle {
+public abstract class Vehicle {
     String vehicleNumber;
     String vehicleColor;
-
+    VehicleSize vehicleSize;
+    VehicleType vehicleType;
     public Vehicle(String vehicleNumber, String vehicleColor) {
         this.vehicleNumber = vehicleNumber;
         this.vehicleColor = vehicleColor;
@@ -24,4 +25,8 @@ public class Vehicle {
     public void setVehicleColor(String vehicleColor) {
         this.vehicleColor = vehicleColor;
     }
+
+    public abstract VehicleSize getVehicleSize();
+    public abstract VehicleType getVehicleType();
+
 }
