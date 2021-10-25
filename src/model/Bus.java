@@ -1,6 +1,6 @@
 package model;
 
-public class Bus extends  Vehicle {
+public class Bus extends Vehicle {
 
     public Bus(String vehicleNumber, String vehicleColor) {
         super(vehicleNumber, vehicleColor);

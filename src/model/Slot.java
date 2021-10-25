@@ -6,12 +6,14 @@ public class Slot {
     boolean isEmpty;
     Vehicle parkVehicle;
     User user;
+    long entryTime;
 
-    public Slot(int slotNumber, boolean isEmpty, Vehicle parkVehicle, User user) {
+    public Slot(int slotNumber, boolean isEmpty, Vehicle parkVehicle, User user, Long entryTime) {
         this.slotNumber = slotNumber;
         this.isEmpty = isEmpty;
         this.parkVehicle = parkVehicle;
         this.user = user;
+        this.entryTime = entryTime;
     }
 
     public int getSlotNumber() {
@@ -44,5 +46,13 @@ public class Slot {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public long getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(long entryTime) {
+        this.entryTime = entryTime;
     }
 }

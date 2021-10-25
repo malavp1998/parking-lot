@@ -5,6 +5,7 @@ public abstract class Vehicle {
     String vehicleColor;
     VehicleSize vehicleSize;
     VehicleType vehicleType;
+
     public Vehicle(String vehicleNumber, String vehicleColor) {
         this.vehicleNumber = vehicleNumber;
         this.vehicleColor = vehicleColor;
@@ -27,6 +28,7 @@ public abstract class Vehicle {
     }
 
     public abstract VehicleSize getVehicleSize();
+
     public abstract VehicleType getVehicleType();
 
 }

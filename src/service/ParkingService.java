@@ -1,8 +1,8 @@
 package service;
 
-import model.Slot;
-import model.User;
-import model.Vehicle;
+import model.*;
+
+import java.util.Calendar;
 
 public class ParkingService {
     int totalSlot;
@@ -13,9 +13,7 @@ public class ParkingService {
         this.totalSlot = totalSlot;
         slots = new Slot[totalSlot];
         totalBookedSlot = 0;
-        for (int i = 0; i < totalSlot; i++) {
-            slots[i] = new Slot(i, true, null, null);
-        }
+        for (int i = 0; i < totalSlot; i++) slots[i] = new Slot(i, true, null, null, (long) 0);
     }
 
     public int getTotalBookedSlot() {
@@ -49,6 +47,7 @@ public class ParkingService {
                 slots[i].setParkVehicle(vehicle);
                 slots[i].setUser(user);
                 slots[i].setEmpty(false);
+                slots[i].setEntryTime(Calendar.getInstance().getTimeInMillis());
                 return slots[i].getSlotNumber();
             }
         }
@@ -57,11 +56,16 @@ public class ParkingService {
 
     public void printSpots() {
         for (int i = 0; i < totalSlot; i++) {
-            System.out.print("Slot Number :" + slots[i].getSlotNumber() + " isEmpty :" + slots[i].isEmpty() + " ");
-            if (!slots[i].isEmpty())
-                System.out.println("Size :" + slots[i].getParkVehicle().getVehicleType() + " Type :" + slots[i].getParkVehicle().getVehicleSize() + " Vehicle Number :" + slots[i].getParkVehicle().getVehicleNumber());
-            else
-                System.out.println(" empty");
+            System.out.println("Slot Number : " + slots[i].getSlotNumber() + ", isEmpty : " + slots[i].isEmpty());
+            if (!slots[i].isEmpty()) {
+                System.out.println("   Slot Details    :: " + "Size : " + slots[i].getParkVehicle().getVehicleSize() + ", " + " Type :" + slots[i].getParkVehicle().getVehicleType());
+                System.out.println("   Owner  Details  :: " + "Name  : " + slots[i].getUser().getUseName() + ", " + "Mobile No. : " + slots[i].getUser().getMobileNumber());
+                System.out.println("   Vehicle Details :: " + "Vehicle No. : " + slots[i].getParkVehicle().getVehicleNumber() + ", " + "Vehicle Colour : " + slots[i].getParkVehicle().getVehicleColor());
+                System.out.println();
+                System.out.println();
+
+            } else
+                System.out.println();
         }
     }
 
@@ -70,11 +74,26 @@ public class ParkingService {
             if (!slots[i].isEmpty() && slots[i].getParkVehicle().getVehicleNumber().equals(vehicleNumber)) {
                 totalBookedSlot--;
                 slots[i].setEmpty(true);
-                System.out.println("Car number: " + vehicleNumber + "  is Removed from Slot " + i);
+
+                if (slots[i].getParkVehicle() instanceof Car) {
+                    System.out.println("Car with number: " + vehicleNumber + "  is Removed from Slot " + i);
+                    int time = (int) (Calendar.getInstance().getTimeInMillis() - slots[i].getEntryTime()) / (60 * 1000);
+                    System.out.println("Charge to be paid : Rs" + new ChargeService().calculateCarCharge(time));
+                }
+                if (slots[i].getParkVehicle() instanceof Bus) {
+                    System.out.println("Bus with number: " + vehicleNumber + "  is Removed from Slot " + i);
+                    int time = (int) (Calendar.getInstance().getTimeInMillis() - slots[i].getEntryTime()) / (60 * 1000);
+                    System.out.println("Charge to be paid : Rs" + new ChargeService().calculateBusCharge(time));
+                }
+                if (slots[i].getParkVehicle() instanceof Bike) {
+                    System.out.println("Bike with number: " + vehicleNumber + "  is Removed from Slot " + i);
+                    int time = (int) (Calendar.getInstance().getTimeInMillis() - slots[i].getEntryTime()) / (60 * 1000);
+                    System.out.println("Charge to be paid : Rs" + new ChargeService().calculateBikeCharge(time));
+                }
                 return;
             }
         }
-        System.out.println("Car with number " + vehicleNumber + " is not in Parking System");
+        System.out.println("Vehicle with number " + vehicleNumber + " is not in Parking System");
     }
 
 }
